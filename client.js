@@ -32,10 +32,24 @@ async function listaExercicios(token) {
   return resposta.data;
 }
 
+async function enviaResposta(token, slug, resposta) {
+  const r = await axios.post(
+    URL_BASE + "/exercicio/" + slug,
+    { resposta: resposta },
+    montaHeaders(token)
+  );
+  console.log(slug + ":", r.data.sucesso ? "acertou" : "errou");
+}
+
+function soma(entrada) {
+  return entrada.a + entrada.b;
+}
+
 async function main() {
   const token = await pegaToken();
   const exercicios = await listaExercicios(token);
-  console.log(exercicios);
+
+  await enviaResposta(token, "soma", soma(exercicios["soma"].entrada));
 }
 
 main();
