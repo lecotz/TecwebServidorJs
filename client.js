@@ -113,6 +113,29 @@ function nEsimoPrimo(entrada) {
   return numero;
 }
 
+function prefixoComum(s1, s2) {
+  let i = 0;
+  while (i < s1.length && i < s2.length && s1[i] === s2[i]) {
+    i++;
+  }
+  return s1.slice(0, i);
+}
+
+function maiorPrefixoComum(entrada) {
+  const strings = entrada.strings;
+  let maior = "";
+  // compara todos os pares de strings
+  for (let i = 0; i < strings.length; i++) {
+    for (let j = i + 1; j < strings.length; j++) {
+      const prefixo = prefixoComum(strings[i], strings[j]);
+      if (prefixo.length > maior.length) {
+        maior = prefixo;
+      }
+    }
+  }
+  return maior;
+}
+
 // slug do exercicio -> funcao que resolve
 const solucoes = {
   "soma": soma,
@@ -125,6 +148,7 @@ const solucoes = {
   "inverte-string": inverteString,
   "soma-valores": somaValores,
   "n-esimo-primo": nEsimoPrimo,
+  "maior-prefixo-comum": maiorPrefixoComum,
 };
 
 async function main() {
