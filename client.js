@@ -136,6 +136,22 @@ function maiorPrefixoComum(entrada) {
   return maior;
 }
 
+function somaSegundoMaiorEMenor(entrada) {
+  // copia antes de ordenar pra nao mexer no array original
+  const ordenados = [...entrada.numeros].sort((a, b) => a - b);
+  const segundoMenor = ordenados[1];
+  const segundoMaior = ordenados[ordenados.length - 2];
+  return segundoMaior + segundoMenor;
+}
+
+function ehPalindromo(palavra) {
+  return palavra === palavra.split("").reverse().join("");
+}
+
+function contaPalindromos(entrada) {
+  return entrada.palavras.filter(ehPalindromo).length;
+}
+
 // slug do exercicio -> funcao que resolve
 const solucoes = {
   "soma": soma,
@@ -149,6 +165,8 @@ const solucoes = {
   "soma-valores": somaValores,
   "n-esimo-primo": nEsimoPrimo,
   "maior-prefixo-comum": maiorPrefixoComum,
+  "soma-segundo-maior-e-menor-numeros": somaSegundoMaiorEMenor,
+  "conta-palindromos": contaPalindromos,
 };
 
 async function main() {
