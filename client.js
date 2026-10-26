@@ -39,6 +39,7 @@ async function enviaResposta(token, slug, resposta) {
     montaHeaders(token)
   );
   console.log(slug + ":", r.data.sucesso ? "acertou" : "errou");
+  return r.data.sucesso;
 }
 
 function soma(entrada) {
@@ -204,14 +205,28 @@ async function main() {
   const token = await pegaToken();
   const exercicios = await listaExercicios(token);
 
+  let acertos = 0;
+  let pontos = 0;
   for (const slug in exercicios) {
     if (!solucoes[slug]) {
       console.log(slug + ": ainda nao fiz");
       continue;
     }
-    const resposta = await solucoes[slug](exercicios[slug].entrada, token);
-    await enviaResposta(token, slug, resposta);
+    try {
+      const resposta = await solucoes[slug](exercicios[slug].entrada, token);
+      if (await enviaResposta(token, slug, resposta)) {
+        acertos++;
+        pontos += exercicios[slug].pontuacao;
+      }
+    } catch (erro) {
+      console.log(slug + ": deu erro ->", erro.response ? erro.response.data : erro.message);
+    }
   }
+
+  const total = Object.keys(exercicios).length;
+  console.log(`\nAcertou ${acertos} de ${total} (${pontos} pontos)`);
 }
 
-main();
+main().catch((erro) => {
+  console.log("Erro:", erro.response ? erro.response.data : erro.message);
+});
