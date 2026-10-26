@@ -93,6 +93,26 @@ function somaValores(entrada) {
   return total;
 }
 
+function ehPrimo(x) {
+  if (x < 2) return false;
+  for (let i = 2; i * i <= x; i++) {
+    if (x % i === 0) return false;
+  }
+  return true;
+}
+
+function nEsimoPrimo(entrada) {
+  let contador = 0;
+  let numero = 1;
+  while (contador < entrada.n) {
+    numero++;
+    if (ehPrimo(numero)) {
+      contador++;
+    }
+  }
+  return numero;
+}
+
 // slug do exercicio -> funcao que resolve
 const solucoes = {
   "soma": soma,
@@ -104,6 +124,7 @@ const solucoes = {
   "mru": mru,
   "inverte-string": inverteString,
   "soma-valores": somaValores,
+  "n-esimo-primo": nEsimoPrimo,
 };
 
 async function main() {
