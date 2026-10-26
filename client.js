@@ -152,6 +152,12 @@ function contaPalindromos(entrada) {
   return entrada.palavras.filter(ehPalindromo).length;
 }
 
+function somaDeStringsDeInts(entrada) {
+  return entrada.strings
+    .map((s) => parseInt(s))
+    .reduce((acc, n) => acc + n, 0);
+}
+
 // slug do exercicio -> funcao que resolve
 const solucoes = {
   "soma": soma,
@@ -167,6 +173,7 @@ const solucoes = {
   "maior-prefixo-comum": maiorPrefixoComum,
   "soma-segundo-maior-e-menor-numeros": somaSegundoMaiorEMenor,
   "conta-palindromos": contaPalindromos,
+  "soma-de-strings-de-ints": somaDeStringsDeInts,
 };
 
 async function main() {
