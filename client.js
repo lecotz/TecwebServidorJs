@@ -17,9 +17,25 @@ async function pegaToken() {
   return resposta.data.accessToken;
 }
 
+function montaHeaders(token) {
+  return {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
+}
+
+async function listaExercicios(token) {
+  const resposta = await axios.get(URL_BASE + "/exercicio", montaHeaders(token));
+  return resposta.data;
+}
+
 async function main() {
   const token = await pegaToken();
-  console.log("Token:", token);
+  const exercicios = await listaExercicios(token);
+  console.log(exercicios);
 }
 
 main();
