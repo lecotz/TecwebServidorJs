@@ -158,6 +158,18 @@ function somaDeStringsDeInts(entrada) {
     .reduce((acc, n) => acc + n, 0);
 }
 
+async function somaComRequisicoes(entrada, token) {
+  // faz todas as requisicoes ao mesmo tempo
+  const respostas = await Promise.all(
+    entrada.endpoints.map((url) => axios.get(url, montaHeaders(token)))
+  );
+  let total = 0;
+  for (const r of respostas) {
+    total += r.data;
+  }
+  return total;
+}
+
 // slug do exercicio -> funcao que resolve
 const solucoes = {
   "soma": soma,
@@ -174,6 +186,7 @@ const solucoes = {
   "soma-segundo-maior-e-menor-numeros": somaSegundoMaiorEMenor,
   "conta-palindromos": contaPalindromos,
   "soma-de-strings-de-ints": somaDeStringsDeInts,
+  "soma-com-requisicoes": somaComRequisicoes,
 };
 
 async function main() {
@@ -185,7 +198,7 @@ async function main() {
       console.log(slug + ": ainda nao fiz");
       continue;
     }
-    const resposta = solucoes[slug](exercicios[slug].entrada);
+    const resposta = await solucoes[slug](exercicios[slug].entrada, token);
     await enviaResposta(token, slug, resposta);
   }
 }
