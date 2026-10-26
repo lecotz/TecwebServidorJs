@@ -53,6 +53,20 @@ function nomeDoUsuario(entrada) {
   return entrada.email.split("@")[0];
 }
 
+function jacaWars(entrada) {
+  const g = 9.8;
+  const theta = (entrada.theta * Math.PI) / 180; // seno usa radianos
+  const distancia = (entrada.v ** 2 * Math.sin(2 * theta)) / g;
+
+  if (Math.abs(distancia - 100) < 2) {
+    return 0;
+  }
+  if (distancia < 100) {
+    return -1;
+  }
+  return 1;
+}
+
 async function main() {
   const token = await pegaToken();
   const exercicios = await listaExercicios(token);
@@ -60,6 +74,7 @@ async function main() {
   await enviaResposta(token, "soma", soma(exercicios["soma"].entrada));
   await enviaResposta(token, "tamanho-string", tamanhoString(exercicios["tamanho-string"].entrada));
   await enviaResposta(token, "nome-do-usuario", nomeDoUsuario(exercicios["nome-do-usuario"].entrada));
+  await enviaResposta(token, "jaca-wars", jacaWars(exercicios["jaca-wars"].entrada));
 }
 
 main();
