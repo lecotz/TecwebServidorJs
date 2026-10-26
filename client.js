@@ -81,6 +81,18 @@ function mru(entrada) {
   return entrada.s0 + entrada.v * entrada.t;
 }
 
+function inverteString(entrada) {
+  return entrada.string.split("").reverse().join("");
+}
+
+function somaValores(entrada) {
+  let total = 0;
+  for (const valor of Object.values(entrada.objeto)) {
+    total += valor;
+  }
+  return total;
+}
+
 // slug do exercicio -> funcao que resolve
 const solucoes = {
   "soma": soma,
@@ -90,6 +102,8 @@ const solucoes = {
   "ano-bissexto": anoBissexto,
   "volume-da-pizza": volumeDaPizza,
   "mru": mru,
+  "inverte-string": inverteString,
+  "soma-valores": somaValores,
 };
 
 async function main() {
