@@ -45,11 +45,21 @@ function soma(entrada) {
   return entrada.a + entrada.b;
 }
 
+function tamanhoString(entrada) {
+  return entrada.string.length;
+}
+
+function nomeDoUsuario(entrada) {
+  return entrada.email.split("@")[0];
+}
+
 async function main() {
   const token = await pegaToken();
   const exercicios = await listaExercicios(token);
 
   await enviaResposta(token, "soma", soma(exercicios["soma"].entrada));
+  await enviaResposta(token, "tamanho-string", tamanhoString(exercicios["tamanho-string"].entrada));
+  await enviaResposta(token, "nome-do-usuario", nomeDoUsuario(exercicios["nome-do-usuario"].entrada));
 }
 
 main();
