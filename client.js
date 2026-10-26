@@ -81,17 +81,29 @@ function mru(entrada) {
   return entrada.s0 + entrada.v * entrada.t;
 }
 
+// slug do exercicio -> funcao que resolve
+const solucoes = {
+  "soma": soma,
+  "tamanho-string": tamanhoString,
+  "nome-do-usuario": nomeDoUsuario,
+  "jaca-wars": jacaWars,
+  "ano-bissexto": anoBissexto,
+  "volume-da-pizza": volumeDaPizza,
+  "mru": mru,
+};
+
 async function main() {
   const token = await pegaToken();
   const exercicios = await listaExercicios(token);
 
-  await enviaResposta(token, "soma", soma(exercicios["soma"].entrada));
-  await enviaResposta(token, "tamanho-string", tamanhoString(exercicios["tamanho-string"].entrada));
-  await enviaResposta(token, "nome-do-usuario", nomeDoUsuario(exercicios["nome-do-usuario"].entrada));
-  await enviaResposta(token, "jaca-wars", jacaWars(exercicios["jaca-wars"].entrada));
-  await enviaResposta(token, "ano-bissexto", anoBissexto(exercicios["ano-bissexto"].entrada));
-  await enviaResposta(token, "volume-da-pizza", volumeDaPizza(exercicios["volume-da-pizza"].entrada));
-  await enviaResposta(token, "mru", mru(exercicios["mru"].entrada));
+  for (const slug in exercicios) {
+    if (!solucoes[slug]) {
+      console.log(slug + ": ainda nao fiz");
+      continue;
+    }
+    const resposta = solucoes[slug](exercicios[slug].entrada);
+    await enviaResposta(token, slug, resposta);
+  }
 }
 
 main();
