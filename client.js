@@ -170,6 +170,16 @@ async function somaComRequisicoes(entrada, token) {
   return total;
 }
 
+async function cacaAoTesouro(entrada, token) {
+  // cada url devolve a proxima url, ate chegar num numero (o tesouro)
+  let atual = entrada.inicio;
+  while (typeof atual === "string") {
+    const r = await axios.get(atual, montaHeaders(token));
+    atual = r.data;
+  }
+  return atual;
+}
+
 // slug do exercicio -> funcao que resolve
 const solucoes = {
   "soma": soma,
@@ -187,6 +197,7 @@ const solucoes = {
   "conta-palindromos": contaPalindromos,
   "soma-de-strings-de-ints": somaDeStringsDeInts,
   "soma-com-requisicoes": somaComRequisicoes,
+  "caca-ao-tesouro": cacaAoTesouro,
 };
 
 async function main() {
